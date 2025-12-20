@@ -1,4 +1,4 @@
-# Folder Alias Fixed - Folder Alias Plugin
+# Folder Alias Enhanced - Folder Alias Plugin
 
 A practical plugin for VSCode file explorer that adds custom alias labels to folders and files, helping you better identify and organize your code projects.
 
@@ -18,7 +18,7 @@ A practical plugin for VSCode file explorer that adds custom alias labels to fol
 ### Method 1: Install from VSCode Extension Marketplace
 1. Open VSCode
 2. Click the "Extensions" icon in the left activity bar (or press `Ctrl+Shift+X`)
-3. Search for "Folder Alias Fixed"
+3. Search for "Folder Alias Enhanced"
 4. Click the "Install" button
 5. Restart VSCode (if necessary)
 
@@ -100,8 +100,8 @@ If you want to build the extension from source, follow these steps:
 
 #### 1. Clone the Repository
 ```bash
-git clone https://github.com/Peaceful-World-X/folder-alias-fixed.git
-cd folder-alias-fixed
+git clone https://github.com/Peaceful-World-X/folder-alias-enhanced.git
+cd folder-alias-enhanced
 ```
 
 #### 2. Install Dependencies
@@ -126,7 +126,7 @@ npm run pack
 ```
 
 #### 5. Install the Extension
-After compilation, a `folder-alias-fixed-0.1.2.vsix` file will be generated in the project root directory:
+After compilation, a `folder-alias-enhanced-0.1.2.vsix` file will be generated in the project root directory:
 
 **Method 1: VSCode Command Installation**
 1. Press `Ctrl+Shift+P` in VSCode to open the command palette
@@ -135,12 +135,12 @@ After compilation, a `folder-alias-fixed-0.1.2.vsix` file will be generated in t
 
 **Method 2: Command Line Installation**
 ```bash
-code --install-extension folder-alias-fixed-0.1.2.vsix
+code --install-extension folder-alias-enhanced-0.1.2.vsix
 ```
 
 ### Project Structure
 ```
-folder-alias-fixed/
+folder-alias-enhanced/
 ├── src/                    # TypeScript source code
 │   ├── index.ts           # Extension entry point
 │   ├── file-alias.ts      # File alias core functionality
@@ -150,7 +150,7 @@ folder-alias-fixed/
 ├── dist/                  # Compiled JavaScript files
 ├── media/                 # Icon resources
 ├── package.json           # Project configuration
-└── folder-alias-fixed-0.1.2.vsix  # Generated extension package
+└── folder-alias-enhanced-0.1.2.vsix  # Generated extension package
 ```
 
 ### Development Scripts
@@ -160,7 +160,7 @@ folder-alias-fixed/
 
 ## 🔧 Development Information
 
-- **Project Repository**: https://github.com/Peaceful-World-X/folder-alias-fixed
+- **Project Repository**: https://github.com/Peaceful-World-X/folder-alias-enhanced
 - **Author**: Peaceful-World-X
 - **Version**: 0.1.2
 - **License**: GPL-3.0
@@ -169,7 +169,7 @@ folder-alias-fixed/
 
 If you encounter any issues or have feature suggestions while using the extension, please contact us through:
 
-- GitHub Issues: https://github.com/Peaceful-World-X/folder-alias-fixed/issues
+- GitHub Issues: https://github.com/Peaceful-World-X/folder-alias-enhanced/issues
 
 ## 📝 Changelog
 

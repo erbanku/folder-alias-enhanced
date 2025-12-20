@@ -1,18 +1,18 @@
 {
-  "publisher": "Peaceful-World-X",
-  "name": "folder-alias-fixed",
-  "displayName": "Folder Alias Fixed",
+  "publisher": "erbanku",
+  "name": "folder-alias-enhanced",
+  "displayName": "Folder Alias enhanced",
   "version": "0.1.2",
-  "description": "为VSCode文件树添加文件夹别名标注的插件",
-  "author": "Peaceful-World-X",
+  "description": "An extension to add folder alias labels to the VSCode file tree",
+  "author": "erbanku",
   "license": "GPLV3",
-  "homepage": "https://github.com/Peaceful-World-X/folder-alias-fixed#readme",
+  "homepage": "https://github.com/erbanku/folder-alias-enhanced#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Peaceful-World-X/folder-alias-fixed"
+    "url": "https://github.com/erbanku/folder-alias-enhanced"
   },
   "bugs": {
-    "url": "https://github.com/Peaceful-World-X/folder-alias-fixed/issues"
+    "url": "https://github.com/erbanku/folder-alias-enhanced/issues"
   },
   "categories": [
     "Other"
@@ -48,6 +48,16 @@
           "group": "1_modification"
         }
       ]
+    },
+    "configuration": {
+      "title": "Folder Alias Enhanced",
+      "properties": {
+        "folder-alias-enhanced.enable": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable or disable the Folder Alias Enhanced extension."
+        }
+      }
     }
   },
   "scripts": {

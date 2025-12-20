@@ -5,7 +5,11 @@ import * as vscode from "vscode";
 function addAlias(workspace: vscode.WorkspaceFolder, fileAlias: UseFileAliasReturn) {
   const { publicConfig, privateConfig, configFile, resetConfig, savePrivate, savePublic, changeEmitter } = fileAlias;
 
-  useCommand("folder-alias.addAlias", (uri: vscode.Uri) => {
+  useCommand("folder-alias.addAlias", (uri?: vscode.Uri) => {
+    if (!uri) {
+      vscode.window.showErrorMessage("Please right-click on a folder to add an alias.");
+      return;
+    }
     const relativelyPath = uri.path.substring(workspace.uri.path.length + 1);
     const inputConfig: vscode.InputBoxOptions = {
       title: "Input Your Alias",
