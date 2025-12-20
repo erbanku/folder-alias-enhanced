@@ -1,186 +1,206 @@
-# Folder Alias Enhanced - Folder Alias Plugin
+# Folder Alias Enhanced
 
-A practical plugin for VSCode file explorer that adds custom alias labels to folders and files, helping you better identify and organize your code projects.
+> Add custom alias labels to folders and files in the VS Code file explorer for better project organization and navigation.
 
 ![Demo](./docs/images/simple.gif)
 
-## ✨ Features
+## Features
 
-- 🏷️ **Folder Alias Labels**: Add custom aliases to folders and files, displayed in the file tree
-- 🎯 **Context Menu Integration**: Quickly add or modify aliases through right-click menu
-- 💾 **Configuration Management**: Alias configurations are saved in `.vscode/folder-alias.json` in your workspace
-- 🔄 **Real-time Updates**: Alias changes take effect immediately in the file tree
-- 🌐 **Multi-workspace Support**: Support for multiple workspaces simultaneously
-- 📝 **Tooltips**: Hover to display detailed information
+-   **Custom Alias Labels** - Add descriptive aliases to any folder or file in your workspace
+-   **Context Menu Integration** - Quick access via right-click in the file explorer
+-   **Persistent Configuration** - Aliases are saved in `.vscode/folder-alias.json` within your workspace
+-   **Real-time Updates** - Changes appear immediately in the file tree
+-   **Multi-workspace Support** - Works seamlessly across multiple workspace folders
+-   **Rich Tooltips** - Hover over aliased items to see additional details
+-   **Public & Private Aliases** - Separate configuration files for team-shared and personal aliases
 
-## 📦 Installation
+## Installation
 
-### Method 1: Install from VSCode Extension Marketplace
-1. Open VSCode
-2. Click the "Extensions" icon in the left activity bar (or press `Ctrl+Shift+X`)
+### From VS Code Marketplace
+
+1. Open VS Code
+2. Press `Ctrl+Shift+X` (Windows/Linux) or `Cmd+Shift+X` (macOS)
 3. Search for "Folder Alias Enhanced"
-4. Click the "Install" button
-5. Restart VSCode (if necessary)
+4. Click **Install**
 
-### Method 2: Manual Installation
-1. Download the `.vsix` extension package
-2. In VSCode, press `Ctrl+Shift+P` to open the command palette
-3. Type "Extensions: Install from VSIX..."
-4. Select the downloaded `.vsix` file to install
+### From VSIX File
 
-## 🚀 Usage
+1. Download the `.vsix` file
+2. Press `Ctrl+Shift+P` to open the Command Palette
+3. Type `Extensions: Install from VSIX...`
+4. Select the downloaded file
 
-### Adding an Alias
-1. In the file explorer, right-click on the folder or file you want to add an alias to
-2. Select "Add Alias" from the context menu
-3. Enter your desired alias in the input box
-4. Press Enter to confirm, and the alias will be displayed immediately in the file tree
+## Usage
 
-### Modifying an Alias
-1. Right-click on a folder or file that already has an alias
-2. Select "Add Alias"
-3. Modify the alias content in the input box
-4. Press Enter to save the changes
+### Add or Edit an Alias
 
-### Deleting an Alias
-1. Right-click on a folder or file with an alias
-2. Select "Add Alias"
-3. Clear the input box content
-4. Press Enter to confirm deletion
+1. Right-click any folder or file in the Explorer
+2. Select **Add Alias** from the context menu
+3. Enter your alias text (e.g., `🧩 Components` or `Utils`)
+4. Press `Enter` to save
 
-## ⚙️ Configuration
+### Remove an Alias
 
-The plugin creates the following configuration files in the `.vscode` directory of each workspace:
+1. Right-click the aliased item
+2. Select **Add Alias**
+3. Clear the input box
+4. Press `Enter`
 
-- `folder-alias.json`: Public alias configuration (can be committed to version control)
-- `private-folder-alias.json`: Private alias configuration (recommended to add to .gitignore)
+## Configuration
 
-### Configuration File Format Example
+Alias configurations are stored in your workspace's `.vscode` directory:
+
+-   **`folder-alias.json`** - Public aliases (commit to version control)
+-   **`private-folder-alias.json`** - Private aliases (add to `.gitignore`)
+
+### Configuration Format
+
 ```json
 {
-  "src/components": {
-    "description": "🧩 Components",
-    "tooltip": "React component library directory"
-  },
-  "src/utils": {
-    "description": "🛠️ Utils",
-    "tooltip": "Common utility functions"
-  }
+    "src/components": {
+        "description": "🧩 Components",
+        "tooltip": "React component library"
+    },
+    "src/utils": {
+        "description": "🛠️ Utilities",
+        "tooltip": "Helper functions and utilities"
+    },
+    "README.md": {
+        "description": "📖 Docs"
+    }
 }
 ```
 
-## 🎨 Usage Tips
+### Extension Settings
 
-1. **Use Emojis**: Use emojis in aliases to make the file tree more intuitive
-   - 📁 Folder
-   - 🧩 Components
-   - 🛠️ Tools
-   - 📝 Documentation
-   - ⚙️ Configuration
+-   `folder-alias-enhanced.enable` - Enable/disable the extension (default: `true`)
 
-2. **Keep it Concise**: Aliases should be short and clear to avoid affecting display
+## Best Practices
 
-3. **Establish Standards**: In team projects, it's recommended to establish unified alias naming conventions
+### Use Emojis for Visual Clarity
 
-## 📋 System Requirements
+```
+📁 Directories    🧩 Components    ⚙️ Config
+🛠️ Tools         📝 Docs          🧪 Tests
+🎨 Styles         🔌 Plugins       📦 Packages
+```
 
-- VSCode Version: 1.100.0 or higher
-- Operating System: Windows, macOS, Linux
+### Keep Aliases Concise
 
-## 🛠️ Development & Build
+Short, clear aliases work best in the file tree:
 
-### Requirements
-- Node.js 18+
-- npm or pnpm
-- VSCode 1.100.0+
+-   ✅ `Utils` or `🛠️ Utils`
+-   ❌ `Utility Functions and Helper Methods`
 
-### Building the Extension from Source
+### Establish Team Conventions
 
-If you want to build the extension from source, follow these steps:
+Define consistent alias patterns for team projects:
 
-#### 1. Clone the Repository
+-   Feature modules: `🧩 [Module Name]`
+-   Configuration: `⚙️ [Config Type]`
+-   Documentation: `📝 [Doc Type]`
+
+## Development
+
+### Prerequisites
+
+-   Node.js 18+
+-   pnpm (or npm)
+-   VS Code 1.100.0+
+
+### Setup
+
 ```bash
-git clone https://github.com/Peaceful-World-X/folder-alias-enhanced.git
+# Clone the repository
+git clone https://github.com/erbanku/folder-alias-enhanced.git
 cd folder-alias-enhanced
-```
 
-#### 2. Install Dependencies
-```bash
-# Using npm (recommended, supports domestic mirrors)
-npm install --registry https://registry.npmmirror.com
-
-# Or using pnpm
+# Install dependencies
 pnpm install
+
+# Build the extension
+pnpm run build
+
+# Package as VSIX
+pnpm run pack
 ```
 
-#### 3. Compile Source Code
+### Available Scripts
+
 ```bash
-# Compile TypeScript to JavaScript
-npm run build
+pnpm run build          # Compile TypeScript
+pnpm run dev            # Watch mode with sourcemaps
+pnpm run pack           # Create VSIX package
+pnpm run publish        # Publish to marketplace
+pnpm run lint           # Run ESLint
+pnpm run typecheck      # TypeScript type checking
+pnpm run test           # Run tests
 ```
 
-#### 4. Package the Extension
-```bash
-# Generate .vsix extension package
-npm run pack
+### Project Structure
+
+```
+folder-alias-enhanced/
+├── src/
+│   ├── index.ts                    # Extension entry point
+│   ├── file-alias.ts               # Core alias functionality
+│   ├── config.ts                   # Configuration management
+│   ├── command/                    # Command implementations
+│   │   └── add-alias.command.ts
+│   ├── hooks/                      # Reactive hooks
+│   │   └── useConfig.ts
+│   └── utils/                      # Utility functions
+├── media/                          # Icons and images
+├── dist/                           # Compiled output
+└── package.json                    # Extension manifest
 ```
 
-#### 5. Install the Extension
-After compilation, a `folder-alias-enhanced-0.1.2.vsix` file will be generated in the project root directory:
+### Installing Development Build
 
-**Method 1: VSCode Command Installation**
-1. Press `Ctrl+Shift+P` in VSCode to open the command palette
-2. Type "Extensions: Install from VSIX..."
-3. Select the generated `.vsix` file to install
+After running `pnpm run pack`, install the generated `.vsix` file:
 
-**Method 2: Command Line Installation**
 ```bash
 code --install-extension folder-alias-enhanced-0.1.2.vsix
 ```
 
-### Project Structure
-```
-folder-alias-enhanced/
-├── src/                    # TypeScript source code
-│   ├── index.ts           # Extension entry point
-│   ├── file-alias.ts      # File alias core functionality
-│   ├── command/           # Command handlers
-│   ├── hooks/             # Configuration management hooks
-│   └── utils/             # Utility functions
-├── dist/                  # Compiled JavaScript files
-├── media/                 # Icon resources
-├── package.json           # Project configuration
-└── folder-alias-enhanced-0.1.2.vsix  # Generated extension package
-```
+Or use the Command Palette: `Extensions: Install from VSIX...`
 
-### Development Scripts
-- `npm run build` - Compile TypeScript source code
-- `npm run pack` - Package the VSCode extension
-- `npm run vscode:prepublish` - Pre-publish preparation
+## Requirements
 
-## 🔧 Development Information
+-   VS Code 1.100.0 or higher
+-   Supports Windows, macOS, and Linux
 
-- **Project Repository**: https://github.com/Peaceful-World-X/folder-alias-enhanced
-- **Author**: Peaceful-World-X
-- **Version**: 0.1.2
-- **License**: GPL-3.0
+## Contributing
 
-## 🐛 Issue Reporting
+Contributions are welcome! Please feel free to submit issues and pull requests.
 
-If you encounter any issues or have feature suggestions while using the extension, please contact us through:
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-- GitHub Issues: https://github.com/Peaceful-World-X/folder-alias-enhanced/issues
+## License
 
-## 📝 Changelog
+[GPL-3.0](LICENSE) © erbanku
 
-### v0.1.2
-- Fixed some known issues
-- Improved user experience
-- Updated documentation
+## Links
 
-## 🤝 Contributing
+-   [GitHub Repository](https://github.com/erbanku/folder-alias-enhanced)
+-   [Issue Tracker](https://github.com/erbanku/folder-alias-enhanced/issues)
+-   [VS Code Marketplace](https://marketplace.visualstudio.com/)
+
+---
+
+**Enjoy organizing your workspace! ✨**
 
 Pull requests and issues are welcome to help improve this extension!
+
+## Credits
+
+Special thanks to
+https://github.com/Muromi-Rikka/folder-alias
+https://github.com/Peaceful-World-X/folder-alias-fixed
 
 ## 📄 License
 
