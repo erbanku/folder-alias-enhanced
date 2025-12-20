@@ -1,187 +1,187 @@
-# Folder Alias Fixed - 文件夹别名插件
+# Folder Alias Fixed - Folder Alias Plugin
 
-一个为VSCode文件资源管理器添加文件夹和文件别名标注的实用插件，帮助您更好地识别和组织代码项目。
+A practical plugin for VSCode file explorer that adds custom alias labels to folders and files, helping you better identify and organize your code projects.
 
-![演示动图](./docs/images/simple.gif)
+![Demo](./docs/images/simple.gif)
 
-## ✨ 功能特性
+## ✨ Features
 
-- 🏷️ **文件夹别名标注**：为文件夹和文件添加自定义别名，在文件树中显示
-- 🎯 **右键菜单集成**：通过右键菜单快速添加或修改别名
-- 💾 **配置文件管理**：别名配置保存在工作区的 `.vscode/folder-alias.json` 文件中
-- 🔄 **实时更新**：别名修改后立即在文件树中生效
-- 🌐 **多工作区支持**：支持多个工作区同时使用
-- 📝 **工具提示**：鼠标悬停显示详细信息
+- 🏷️ **Folder Alias Labels**: Add custom aliases to folders and files, displayed in the file tree
+- 🎯 **Context Menu Integration**: Quickly add or modify aliases through right-click menu
+- 💾 **Configuration Management**: Alias configurations are saved in `.vscode/folder-alias.json` in your workspace
+- 🔄 **Real-time Updates**: Alias changes take effect immediately in the file tree
+- 🌐 **Multi-workspace Support**: Support for multiple workspaces simultaneously
+- 📝 **Tooltips**: Hover to display detailed information
 
-## 📦 安装方法
+## 📦 Installation
 
-### 方法一：从VSCode扩展市场安装
-1. 打开VSCode
-2. 点击左侧活动栏的"扩展"图标（或按 `Ctrl+Shift+X`）
-3. 搜索 "Folder Alias Fixed"
-4. 点击"安装"按钮
-5. 重启VSCode（如需要）
+### Method 1: Install from VSCode Extension Marketplace
+1. Open VSCode
+2. Click the "Extensions" icon in the left activity bar (or press `Ctrl+Shift+X`)
+3. Search for "Folder Alias Fixed"
+4. Click the "Install" button
+5. Restart VSCode (if necessary)
 
-### 方法二：手动安装
-1. 下载 `.vsix` 插件包
-2. 在VSCode中按 `Ctrl+Shift+P` 打开命令面板
-3. 输入 "Extensions: Install from VSIX..."
-4. 选择下载的 `.vsix` 文件进行安装
+### Method 2: Manual Installation
+1. Download the `.vsix` extension package
+2. In VSCode, press `Ctrl+Shift+P` to open the command palette
+3. Type "Extensions: Install from VSIX..."
+4. Select the downloaded `.vsix` file to install
 
-## 🚀 使用方法
+## 🚀 Usage
 
-### 添加别名
-1. 在文件资源管理器中，右键点击要添加别名的文件夹或文件
-2. 从右键菜单中选择 "Add Alias"（添加别名）
-3. 在弹出的输入框中输入您想要的别名
-4. 按回车键确认，别名将立即显示在文件树中
+### Adding an Alias
+1. In the file explorer, right-click on the folder or file you want to add an alias to
+2. Select "Add Alias" from the context menu
+3. Enter your desired alias in the input box
+4. Press Enter to confirm, and the alias will be displayed immediately in the file tree
 
-### 修改别名
-1. 右键点击已有别名的文件夹或文件
-2. 选择 "Add Alias"
-3. 修改输入框中的别名内容
-4. 按回车键保存修改
+### Modifying an Alias
+1. Right-click on a folder or file that already has an alias
+2. Select "Add Alias"
+3. Modify the alias content in the input box
+4. Press Enter to save the changes
 
-### 删除别名
-1. 右键点击有别名的文件夹或文件
-2. 选择 "Add Alias"
-3. 清空输入框内容
-4. 按回车键确认删除
+### Deleting an Alias
+1. Right-click on a folder or file with an alias
+2. Select "Add Alias"
+3. Clear the input box content
+4. Press Enter to confirm deletion
 
-## ⚙️ 配置文件
+## ⚙️ Configuration
 
-插件会在每个工作区的 `.vscode` 目录下创建以下配置文件：
+The plugin creates the following configuration files in the `.vscode` directory of each workspace:
 
-- `folder-alias.json`：公共别名配置（可提交到版本控制）
-- `private-folder-alias.json`：私有别名配置（建议添加到 .gitignore）
+- `folder-alias.json`: Public alias configuration (can be committed to version control)
+- `private-folder-alias.json`: Private alias configuration (recommended to add to .gitignore)
 
-### 配置文件格式示例
+### Configuration File Format Example
 ```json
 {
   "src/components": {
-    "description": "🧩 组件库",
-    "tooltip": "React组件库目录"
+    "description": "🧩 Components",
+    "tooltip": "React component library directory"
   },
   "src/utils": {
-    "description": "🛠️ 工具函数",
-    "tooltip": "通用工具函数库"
+    "description": "🛠️ Utils",
+    "tooltip": "Common utility functions"
   }
 }
 ```
 
-## 🎨 使用技巧
+## 🎨 Usage Tips
 
-1. **使用表情符号**：在别名中使用表情符号让文件树更加直观
-   - 📁 文件夹
-   - 🧩 组件
-   - 🛠️ 工具
-   - 📝 文档
-   - ⚙️ 配置
+1. **Use Emojis**: Use emojis in aliases to make the file tree more intuitive
+   - 📁 Folder
+   - 🧩 Components
+   - 🛠️ Tools
+   - 📝 Documentation
+   - ⚙️ Configuration
 
-2. **简短明了**：别名应该简短明了，避免过长影响显示效果
+2. **Keep it Concise**: Aliases should be short and clear to avoid affecting display
 
-3. **统一规范**：在团队项目中建议制定统一的别名命名规范
+3. **Establish Standards**: In team projects, it's recommended to establish unified alias naming conventions
 
-## 📋 系统要求
+## 📋 System Requirements
 
-- VSCode 版本：1.100.0 或更高
-- 操作系统：Windows、macOS、Linux
+- VSCode Version: 1.100.0 or higher
+- Operating System: Windows, macOS, Linux
 
-## 🛠️ 开发与构建
+## 🛠️ Development & Build
 
-### 环境要求
+### Requirements
 - Node.js 18+
-- npm 或 pnpm
+- npm or pnpm
 - VSCode 1.100.0+
 
-### 从源码构建插件
+### Building the Extension from Source
 
-如果您想从源码构建插件，请按照以下步骤操作：
+If you want to build the extension from source, follow these steps:
 
-#### 1. 克隆项目
+#### 1. Clone the Repository
 ```bash
 git clone https://github.com/Peaceful-World-X/folder-alias-fixed.git
 cd folder-alias-fixed
 ```
 
-#### 2. 安装依赖
+#### 2. Install Dependencies
 ```bash
-# 使用 npm（推荐，支持国内镜像）
+# Using npm (recommended, supports domestic mirrors)
 npm install --registry https://registry.npmmirror.com
 
-# 或使用 pnpm
+# Or using pnpm
 pnpm install
 ```
 
-#### 3. 编译源代码
+#### 3. Compile Source Code
 ```bash
-# 编译 TypeScript 到 JavaScript
+# Compile TypeScript to JavaScript
 npm run build
 ```
 
-#### 4. 打包生成插件
+#### 4. Package the Extension
 ```bash
-# 生成 .vsix 插件包
+# Generate .vsix extension package
 npm run pack
 ```
 
-#### 5. 安装插件
-编译完成后，会在项目根目录生成 `folder-alias-fixed-0.1.2.vsix` 文件：
+#### 5. Install the Extension
+After compilation, a `folder-alias-fixed-0.1.2.vsix` file will be generated in the project root directory:
 
-**方法一：VSCode 命令安装**
-1. 在 VSCode 中按 `Ctrl+Shift+P` 打开命令面板
-2. 输入 "Extensions: Install from VSIX..."
-3. 选择生成的 `.vsix` 文件进行安装
+**Method 1: VSCode Command Installation**
+1. Press `Ctrl+Shift+P` in VSCode to open the command palette
+2. Type "Extensions: Install from VSIX..."
+3. Select the generated `.vsix` file to install
 
-**方法二：命令行安装**
+**Method 2: Command Line Installation**
 ```bash
 code --install-extension folder-alias-fixed-0.1.2.vsix
 ```
 
-### 项目结构
+### Project Structure
 ```
 folder-alias-fixed/
-├── src/                    # TypeScript 源代码
-│   ├── index.ts           # 插件入口文件
-│   ├── file-alias.ts      # 文件别名核心功能
-│   ├── command/           # 命令处理
-│   ├── hooks/             # 配置管理钩子
-│   └── utils/             # 工具函数
-├── dist/                  # 编译后的 JavaScript 文件
-├── media/                 # 图标资源
-├── package.json           # 项目配置
-└── folder-alias-fixed-0.1.2.vsix  # 生成的插件包
+├── src/                    # TypeScript source code
+│   ├── index.ts           # Extension entry point
+│   ├── file-alias.ts      # File alias core functionality
+│   ├── command/           # Command handlers
+│   ├── hooks/             # Configuration management hooks
+│   └── utils/             # Utility functions
+├── dist/                  # Compiled JavaScript files
+├── media/                 # Icon resources
+├── package.json           # Project configuration
+└── folder-alias-fixed-0.1.2.vsix  # Generated extension package
 ```
 
-### 开发脚本说明
-- `npm run build` - 编译 TypeScript 源代码
-- `npm run pack` - 打包生成 VSCode 插件
-- `npm run vscode:prepublish` - 发布前预处理
+### Development Scripts
+- `npm run build` - Compile TypeScript source code
+- `npm run pack` - Package the VSCode extension
+- `npm run vscode:prepublish` - Pre-publish preparation
 
-## 🔧 开发信息
+## 🔧 Development Information
 
-- **项目地址**：https://github.com/Peaceful-World-X/folder-alias-fixed
-- **作者**：Peaceful-World-X
-- **版本**：0.1.2
-- **许可证**：GPL-3.0
+- **Project Repository**: https://github.com/Peaceful-World-X/folder-alias-fixed
+- **Author**: Peaceful-World-X
+- **Version**: 0.1.2
+- **License**: GPL-3.0
 
-## 🐛 问题反馈
+## 🐛 Issue Reporting
 
-如果您在使用过程中遇到任何问题或有功能建议，请通过以下方式联系：
+If you encounter any issues or have feature suggestions while using the extension, please contact us through:
 
-- GitHub Issues：https://github.com/Peaceful-World-X/folder-alias-fixed/issues
+- GitHub Issues: https://github.com/Peaceful-World-X/folder-alias-fixed/issues
 
-## 📝 更新日志
+## 📝 Changelog
 
 ### v0.1.2
-- 修复了一些已知问题
-- 优化了用户体验
-- 更新了中文文档
+- Fixed some known issues
+- Improved user experience
+- Updated documentation
 
-## 🤝 贡献
+## 🤝 Contributing
 
-欢迎提交 Pull Request 或 Issue 来帮助改进这个插件！
+Pull requests and issues are welcome to help improve this extension!
 
-## 📄 许可证
+## 📄 License
 
-本项目采用 GPL-3.0 许可证，详情请查看 [LICENSE](LICENSE) 文件。
+This project is licensed under GPL-3.0. See the [LICENSE](LICENSE) file for details.
