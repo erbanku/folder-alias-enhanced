@@ -198,8 +198,10 @@ Pull requests and issues are welcome to help improve this extension!
 
 ## Credits
 
-Special thanks to
+Special thanks to:
+
 https://github.com/Muromi-Rikka/folder-alias
+
 https://github.com/Peaceful-World-X/folder-alias-fixed
 
 ## 📄 License
