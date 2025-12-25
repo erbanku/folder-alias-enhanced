@@ -3,7 +3,6 @@ import type { UseConfigReturn } from "./hooks/useConfig";
 import { useEventEmitter, useFsWatcher } from "reactive-vscode";
 import { FileDecoration, RelativePattern, window } from "vscode";
 import { useConfig } from "./hooks/useConfig";
-import { logger } from "./utils/logger.util";
 
 // eslint-disable-next-line ts/ban-ts-comment
 // @ts-expect-error
@@ -29,7 +28,16 @@ export function useFileAlias(uri: Uri): UseFileAliasReturn {
   function getFileDecoration(_uri: Uri) {
     const file = _uri.toString().replace(`${uri.toString()}/`, "");
     if (configFile.value[file]) {
-      return new FileDecoration(configFile.value[file].description, configFile.value[file].tooltip);
+      const description = configFile.value[file].description || "";
+      const maxBadgeLength = 15; // Reasonable length for display
+      const truncatedDescription = description.length > maxBadgeLength
+        ? `${description.substring(0, maxBadgeLength)}...`
+        : description;
+      // Use the full description as tooltip if it was truncated, or use custom tooltip if provided
+      const tooltip = description.length > maxBadgeLength
+        ? description
+        : (configFile.value[file].tooltip || description);
+      return new FileDecoration(truncatedDescription, tooltip);
     }
   }
   const changeEmitter = useEventEmitter<undefined | Uri | Uri[]>([]);
