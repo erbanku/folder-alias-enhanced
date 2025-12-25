@@ -39,16 +39,57 @@
           "light": "media/light/edit.svg",
           "dark": "media/dark/edit.svg"
         }
+      },
+      {
+        "command": "folder-alias.removeAlias",
+        "title": "Remove Alias",
+        "icon": {
+          "light": "media/light/edit.svg",
+          "dark": "media/dark/edit.svg"
+        }
+      },
+      {
+        "command": "folder-alias.editAlias",
+        "title": "Edit Alias",
+        "icon": {
+          "light": "media/light/edit.svg",
+          "dark": "media/dark/edit.svg"
+        }
       }
     ],
     "menus": {
       "explorer/context": [
         {
           "command": "folder-alias.addAlias",
-          "group": "1_modification"
+          "group": "1_modification@1"
+        },
+        {
+          "command": "folder-alias.editAlias",
+          "group": "1_modification@2"
+        },
+        {
+          "command": "folder-alias.removeAlias",
+          "group": "1_modification@3"
         }
       ]
     },
+    "keybindings": [
+      {
+        "command": "folder-alias.addAlias",
+        "key": "",
+        "when": "editorFocus"
+      },
+      {
+        "command": "folder-alias.editAlias",
+        "key": "",
+        "when": "editorFocus"
+      },
+      {
+        "command": "folder-alias.removeAlias",
+        "key": "",
+        "when": "editorFocus"
+      }
+    ],
     "configuration": {
       "title": "Folder Alias Enhanced",
       "properties": {
@@ -56,6 +97,12 @@
           "type": "boolean",
           "default": true,
           "description": "Enable or disable the Folder Alias Enhanced extension."
+        },
+        "folder-alias-enhanced.defaultAliasType": {
+          "type": "string",
+          "enum": ["public", "private"],
+          "default": "public",
+          "description": "Default alias type when adding a new alias (public or private)."
         }
       }
     }

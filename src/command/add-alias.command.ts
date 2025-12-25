@@ -1,50 +1,223 @@
 import type { UseFileAliasReturn } from "../file-alias";
 import { useCommand } from "reactive-vscode";
 import * as vscode from "vscode";
+import { config } from "../config";
 
 function addAlias(workspace: vscode.WorkspaceFolder, fileAlias: UseFileAliasReturn) {
   const { publicConfig, privateConfig, configFile, resetConfig, savePrivate, savePublic, changeEmitter } = fileAlias;
 
-  useCommand("folder-alias.addAlias", (uri?: vscode.Uri) => {
+  // Helper function to check if a folder has an alias
+  function hasAlias(uri: vscode.Uri): boolean {
+    const relativelyPath = uri.path.substring(workspace.uri.path.length + 1);
+    return !!configFile.value[relativelyPath];
+  }
+
+  // Helper function to show merged input with alias type selection
+  async function showAliasInput(uri: vscode.Uri, existingAlias: string = "", existingType: string = "") {
+    const defaultType = existingType || config.defaultAliasType || "public";
+
+    // Create quick pick with custom items
+    const quickPick = vscode.window.createQuickPick();
+    quickPick.title = existingAlias ? "Edit Alias" : "Add Alias";
+    quickPick.placeholder = "Enter alias name and select type (↑/↓ to change type)";
+    quickPick.value = existingAlias || "folder-alias";
+
+    // Create items for type selection
+    const items = [
+      {
+        label: "public",
+        description: "Visible to all users (committed to git)",
+        picked: defaultType === "public",
+      },
+      {
+        label: "private",
+        description: "Local only (git-ignored)",
+        picked: defaultType === "private",
+      },
+    ];
+
+    quickPick.items = items;
+    quickPick.activeItems = items.filter(item => item.picked);
+    quickPick.canSelectMany = false;
+
+    return new Promise<{ alias: string; type: string } | undefined>((resolve) => {
+      let selectedType = defaultType;
+      let inputValue = quickPick.value;
+
+      quickPick.onDidChangeSelection((selection) => {
+        if (selection[0]) {
+          selectedType = selection[0].label;
+          // Update the items to show which one is selected
+          quickPick.items = items.map(item => ({
+            ...item,
+            picked: item.label === selectedType,
+          }));
+        }
+      });
+
+      quickPick.onDidChangeValue((value) => {
+        inputValue = value;
+      });
+
+      quickPick.onDidAccept(() => {
+        quickPick.hide();
+        if (inputValue && inputValue.trim()) {
+          resolve({ alias: inputValue.trim(), type: selectedType });
+        }
+        else {
+          resolve(undefined);
+        }
+      });
+
+      quickPick.onDidHide(() => {
+        quickPick.dispose();
+        resolve(undefined);
+      });
+
+      quickPick.show();
+    });
+  }
+
+  // Helper function to save alias
+  function saveAlias(uri: vscode.Uri, alias: string, type: string) {
+    const relativelyPath = uri.path.substring(workspace.uri.path.length + 1);
+
+    if (type === "private") {
+      // Remove from public if exists
+      if (publicConfig.value[relativelyPath]) {
+        delete publicConfig.value[relativelyPath];
+        savePublic();
+      }
+      privateConfig.value[relativelyPath] = {
+        ...privateConfig.value[relativelyPath],
+        description: alias,
+      };
+      savePrivate();
+    }
+    else {
+      // Remove from private if exists
+      if (privateConfig.value[relativelyPath]) {
+        delete privateConfig.value[relativelyPath];
+        savePrivate();
+      }
+      publicConfig.value[relativelyPath] = {
+        ...publicConfig.value[relativelyPath],
+        description: alias,
+      };
+      savePublic();
+    }
+
+    resetConfig();
+    changeEmitter(uri);
+  }
+
+  // Helper function to remove alias
+  function removeAlias(uri: vscode.Uri) {
+    const relativelyPath = uri.path.substring(workspace.uri.path.length + 1);
+
+    // Remove from both configs
+    if (publicConfig.value[relativelyPath]) {
+      delete publicConfig.value[relativelyPath];
+      savePublic();
+    }
+    if (privateConfig.value[relativelyPath]) {
+      delete privateConfig.value[relativelyPath];
+      savePrivate();
+    }
+
+    resetConfig();
+    changeEmitter(uri);
+  }
+
+  // Add Alias command - shows options if alias exists
+  useCommand("folder-alias.addAlias", async (uri?: vscode.Uri) => {
     if (!uri) {
       vscode.window.showErrorMessage("Please right-click on a folder to add an alias.");
       return;
     }
-    const relativelyPath = uri.path.substring(workspace.uri.path.length + 1);
-    const inputConfig: vscode.InputBoxOptions = {
-      title: "Input Your Alias",
-      value: configFile.value[relativelyPath]
-        ? configFile.value[relativelyPath].description
-        : "folder-alias",
-    };
-    vscode.window.showQuickPick(["public", "private"]).then((scope) => {
-      if (scope === "private") {
-        vscode.window.showInputBox(inputConfig).then((alias) => {
-          if (alias) {
-            privateConfig.value[relativelyPath] = {
-              ...privateConfig.value[relativelyPath],
-              description: alias,
-            };
-            savePrivate();
-            resetConfig();
-            changeEmitter(uri);
-          }
-        });
+
+    // Check if alias already exists
+    if (hasAlias(uri)) {
+      // Show options: Edit or Remove
+      const action = await vscode.window.showQuickPick(
+        [
+          { label: "Edit Alias", value: "edit" },
+          { label: "Remove Alias", value: "remove" },
+        ],
+        { placeHolder: "This folder already has an alias. What would you like to do?" },
+      );
+
+      if (!action) {
+        return;
+      }
+
+      if (action.value === "remove") {
+        removeAlias(uri);
+        vscode.window.showInformationMessage("Alias removed successfully.");
       }
       else {
-        vscode.window.showInputBox(inputConfig).then((alias) => {
-          if (alias) {
-            publicConfig.value[relativelyPath] = {
-              ...publicConfig.value[relativelyPath],
-              description: alias,
-            };
-            savePublic();
-            resetConfig();
-            changeEmitter(uri);
-          }
-        });
+        // Edit existing alias
+        const relativelyPath = uri.path.substring(workspace.uri.path.length + 1);
+        const existingAlias = configFile.value[relativelyPath]?.description || "";
+        let existingType = "public";
+        if (privateConfig.value[relativelyPath]) {
+          existingType = "private";
+        }
+
+        const result = await showAliasInput(uri, existingAlias, existingType);
+        if (result) {
+          saveAlias(uri, result.alias, result.type);
+        }
       }
-    });
+    }
+    else {
+      // Add new alias
+      const result = await showAliasInput(uri);
+      if (result) {
+        saveAlias(uri, result.alias, result.type);
+      }
+    }
+  });
+
+  // Edit Alias command - for direct editing
+  useCommand("folder-alias.editAlias", async (uri?: vscode.Uri) => {
+    if (!uri) {
+      vscode.window.showErrorMessage("Please right-click on a folder to edit an alias.");
+      return;
+    }
+
+    if (!hasAlias(uri)) {
+      vscode.window.showWarningMessage("This folder doesn't have an alias. Use 'Add Alias' instead.");
+      return;
+    }
+
+    const relativelyPath = uri.path.substring(workspace.uri.path.length + 1);
+    const existingAlias = configFile.value[relativelyPath]?.description || "";
+    let existingType = "public";
+    if (privateConfig.value[relativelyPath]) {
+      existingType = "private";
+    }
+
+    const result = await showAliasInput(uri, existingAlias, existingType);
+    if (result) {
+      saveAlias(uri, result.alias, result.type);
+    }
+  });
+
+  // Remove Alias command
+  useCommand("folder-alias.removeAlias", (uri?: vscode.Uri) => {
+    if (!uri) {
+      vscode.window.showErrorMessage("Please right-click on a folder to remove an alias.");
+      return;
+    }
+
+    if (!hasAlias(uri)) {
+      vscode.window.showWarningMessage("This folder doesn't have an alias to remove.");
+      return;
+    }
+
+    removeAlias(uri);
+    vscode.window.showInformationMessage("Alias removed successfully.");
   });
 }
 
