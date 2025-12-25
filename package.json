@@ -61,18 +61,6 @@
         }
       ]
     },
-    "keybindings": [
-      {
-        "command": "folder-alias.addAlias",
-        "key": "",
-        "when": "editorFocus"
-      },
-      {
-        "command": "folder-alias.removeAlias",
-        "key": "",
-        "when": "editorFocus"
-      }
-    ],
     "configuration": {
       "title": "Folder Alias Enhanced",
       "properties": {
