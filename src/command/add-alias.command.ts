@@ -20,26 +20,26 @@ function addAlias(workspace: vscode.WorkspaceFolder, fileAlias: UseFileAliasRetu
     vscode.window.showQuickPick(["public", "private"]).then((scope) => {
       if (scope === "private") {
         vscode.window.showInputBox(inputConfig).then((alias) => {
-          resetConfig();
           if (alias) {
             privateConfig.value[relativelyPath] = {
               ...privateConfig.value[relativelyPath],
               description: alias,
             };
             savePrivate();
+            resetConfig();
             changeEmitter(uri);
           }
         });
       }
       else {
         vscode.window.showInputBox(inputConfig).then((alias) => {
-          resetConfig();
           if (alias) {
             publicConfig.value[relativelyPath] = {
               ...publicConfig.value[relativelyPath],
               description: alias,
             };
             savePublic();
+            resetConfig();
             changeEmitter(uri);
           }
         });
