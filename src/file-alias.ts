@@ -29,12 +29,13 @@ export function useFileAlias(uri: Uri): UseFileAliasReturn {
     const file = _uri.toString().replace(`${uri.toString()}/`, "");
     if (configFile.value[file]) {
       const description = configFile.value[file].description || "";
-      const maxBadgeLength = 15; // Reasonable length for display
-      const truncatedDescription = description.length > maxBadgeLength
-        ? `${description.substring(0, maxBadgeLength)}...`
+      const MAX_BADGE_LENGTH = 15; // Reasonable length for display
+      const isTruncated = description.length > MAX_BADGE_LENGTH;
+      const truncatedDescription = isTruncated
+        ? `${description.substring(0, MAX_BADGE_LENGTH)}...`
         : description;
       // Use the full description as tooltip if it was truncated, or use custom tooltip if provided
-      const tooltip = description.length > maxBadgeLength
+      const tooltip = isTruncated
         ? description
         : (configFile.value[file].tooltip || description);
       return new FileDecoration(truncatedDescription, tooltip);
