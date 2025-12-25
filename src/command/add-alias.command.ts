@@ -129,7 +129,7 @@ function addAlias(workspace: vscode.WorkspaceFolder, fileAlias: UseFileAliasRetu
     changeEmitter(uri);
   }
 
-  // Add Alias command - shows options if alias exists
+  // Add/Edit Alias command - automatically handles both scenarios
   useCommand("folder-alias.addAlias", async (uri?: vscode.Uri) => {
     if (!uri) {
       vscode.window.showErrorMessage("Please right-click on a folder to add an alias.");
@@ -138,40 +138,21 @@ function addAlias(workspace: vscode.WorkspaceFolder, fileAlias: UseFileAliasRetu
 
     // Check if alias already exists
     if (hasAlias(uri)) {
-      // Show options: Edit or Remove
-      const action = await vscode.window.showQuickPick(
-        [
-          { label: "Edit Alias", value: "edit" },
-          { label: "Remove Alias", value: "remove" },
-        ],
-        { placeHolder: "This folder already has an alias. What would you like to do?" },
-      );
-
-      if (!action) {
-        return;
+      // Editing existing alias
+      const relativelyPath = uri.path.substring(workspace.uri.path.length + 1);
+      const existingAlias = configFile.value[relativelyPath]?.description || "";
+      let existingType = "public";
+      if (privateConfig.value[relativelyPath]) {
+        existingType = "private";
       }
 
-      if (action.value === "remove") {
-        removeAlias(uri);
-        vscode.window.showInformationMessage("Alias removed successfully.");
-      }
-      else {
-        // Edit existing alias
-        const relativelyPath = uri.path.substring(workspace.uri.path.length + 1);
-        const existingAlias = configFile.value[relativelyPath]?.description || "";
-        let existingType = "public";
-        if (privateConfig.value[relativelyPath]) {
-          existingType = "private";
-        }
-
-        const result = await showAliasInput(uri, existingAlias, existingType);
-        if (result) {
-          saveAlias(uri, result.alias, result.type);
-        }
+      const result = await showAliasInput(uri, existingAlias, existingType);
+      if (result) {
+        saveAlias(uri, result.alias, result.type);
       }
     }
     else {
-      // Add new alias
+      // Adding new alias
       const result = await showAliasInput(uri);
       if (result) {
         saveAlias(uri, result.alias, result.type);
@@ -179,32 +160,7 @@ function addAlias(workspace: vscode.WorkspaceFolder, fileAlias: UseFileAliasRetu
     }
   });
 
-  // Edit Alias command - for direct editing
-  useCommand("folder-alias.editAlias", async (uri?: vscode.Uri) => {
-    if (!uri) {
-      vscode.window.showErrorMessage("Please right-click on a folder to edit an alias.");
-      return;
-    }
-
-    if (!hasAlias(uri)) {
-      vscode.window.showWarningMessage("This folder doesn't have an alias. Use 'Add Alias' instead.");
-      return;
-    }
-
-    const relativelyPath = uri.path.substring(workspace.uri.path.length + 1);
-    const existingAlias = configFile.value[relativelyPath]?.description || "";
-    let existingType = "public";
-    if (privateConfig.value[relativelyPath]) {
-      existingType = "private";
-    }
-
-    const result = await showAliasInput(uri, existingAlias, existingType);
-    if (result) {
-      saveAlias(uri, result.alias, result.type);
-    }
-  });
-
-  // Remove Alias command
+  // Remove Alias command - only works when alias exists
   useCommand("folder-alias.removeAlias", (uri?: vscode.Uri) => {
     if (!uri) {
       vscode.window.showErrorMessage("Please right-click on a folder to remove an alias.");

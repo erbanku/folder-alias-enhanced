@@ -34,7 +34,7 @@
     "commands": [
       {
         "command": "folder-alias.addAlias",
-        "title": "Add Alias",
+        "title": "Add/Edit Alias",
         "icon": {
           "light": "media/light/edit.svg",
           "dark": "media/dark/edit.svg"
@@ -43,14 +43,6 @@
       {
         "command": "folder-alias.removeAlias",
         "title": "Remove Alias",
-        "icon": {
-          "light": "media/light/edit.svg",
-          "dark": "media/dark/edit.svg"
-        }
-      },
-      {
-        "command": "folder-alias.editAlias",
-        "title": "Edit Alias",
         "icon": {
           "light": "media/light/edit.svg",
           "dark": "media/dark/edit.svg"
@@ -64,23 +56,14 @@
           "group": "1_modification@1"
         },
         {
-          "command": "folder-alias.editAlias",
-          "group": "1_modification@2"
-        },
-        {
           "command": "folder-alias.removeAlias",
-          "group": "1_modification@3"
+          "group": "1_modification@2"
         }
       ]
     },
     "keybindings": [
       {
         "command": "folder-alias.addAlias",
-        "key": "",
-        "when": "editorFocus"
-      },
-      {
-        "command": "folder-alias.editAlias",
         "key": "",
         "when": "editorFocus"
       },
