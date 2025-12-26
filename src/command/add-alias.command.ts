@@ -21,8 +21,8 @@ function addAlias(workspace: vscode.WorkspaceFolder, fileAlias: UseFileAliasRetu
     quickPick.title = existingAlias ? "Edit Alias" : "Add Alias";
     quickPick.placeholder = "Enter alias name and select type (↑/↓ to change type)";
     quickPick.value = existingAlias || "";
-    quickPick.matchOnDescription = true;
-    quickPick.matchOnDetail = true;
+    quickPick.matchOnDescription = false;
+    quickPick.matchOnDetail = false;
 
     // Create items for type selection
     const items = [
