@@ -21,7 +21,7 @@ export function useFileAlias(uri: Uri): UseFileAliasReturn {
   const { publicConfig, privateConfig, configFile, resetConfig, savePublic, savePrivate } = useConfig(uri.fsPath);
   const watcher = useFsWatcher(new RelativePattern(uri, "**/*"));
   watcher.onDidChange((uri) => {
-    if (uri.fsPath.endsWith("folder-alias.json")) {
+    if (uri.fsPath.endsWith("public-folder-alias.json")) {
       resetConfig();
     }
   });

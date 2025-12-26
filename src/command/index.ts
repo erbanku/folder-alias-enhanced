@@ -1,1 +1,1 @@
-export { addAlias } from "./add-alias.command";
+export { registerCommands } from "./add-alias.command";

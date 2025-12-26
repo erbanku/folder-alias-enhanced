@@ -2,7 +2,7 @@
   "publisher": "erbanku",
   "name": "folder-alias-enhanced",
   "displayName": "Folder Alias Enhanced",
-  "version": "0.1.4",
+  "version": "0.1.6",
   "description": "An extension to add folder alias labels to the VSCode file tree",
   "author": "erbanku",
   "license": "GPLV3",
@@ -53,10 +53,12 @@
       "explorer/context": [
         {
           "command": "folder-alias.addAlias",
+          "when": "explorerResourceIsFolder",
           "group": "1_modification@1"
         },
         {
           "command": "folder-alias.removeAlias",
+          "when": "explorerResourceIsFolder",
           "group": "1_modification@2"
         }
       ]
@@ -71,9 +73,24 @@
         },
         "folder-alias-enhanced.defaultAliasType": {
           "type": "string",
-          "enum": ["public", "private"],
+          "enum": [ "public", "private" ],
           "default": "public",
           "description": "Default alias type when adding a new alias (public or private)."
+        },
+        "folder-alias-enhanced.autoCreatePublicConfig": {
+          "type": "boolean",
+          "default": false,
+          "description": "Automatically create public-folder-alias.json if it does not exist."
+        },
+        "folder-alias-enhanced.autoCreatePrivateConfig": {
+          "type": "boolean",
+          "default": false,
+          "description": "Automatically create private-folder-alias.json if it does not exist."
+        },
+        "folder-alias-enhanced.autoAddPrivateToGitignore": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically add private-folder-alias.json to .gitignore."
         }
       }
     }

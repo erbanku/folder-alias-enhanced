@@ -5,3 +5,4 @@ node_modules
 generated
 .vscode/
 *folder-alias*
+.vscode/private-folder-alias.json

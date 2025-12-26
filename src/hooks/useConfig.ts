@@ -15,7 +15,7 @@ export interface UseConfigReturn {
 }
 
 export function useConfig(fileDir: string): UseConfigReturn {
-  const configPath = join(fileDir, ".vscode", "folder-alias.json");
+  const configPath = join(fileDir, ".vscode", "public-folder-alias.json");
   const privateConfigPath = join(fileDir, ".vscode", "private-folder-alias.json");
   const publicConfig = ref(readConfig(configPath));
   const privateConfig = ref(readConfig(privateConfigPath));
@@ -26,10 +26,12 @@ export function useConfig(fileDir: string): UseConfigReturn {
   }
 
   function savePublic() {
+    console.log('[folder-alias] Saving public config:', configPath, publicConfig.value);
     writeConfig(configPath, publicConfig.value);
   }
 
   function savePrivate() {
+    console.log('[folder-alias] Saving private config:', privateConfigPath, privateConfig.value);
     writeConfig(privateConfigPath, privateConfig.value);
   }
 
