@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Folder Alias Enhanced</title>
+    <style>
+        body {
+            font-family: var(--vscode-font-family);
+            color: var(--vscode-foreground);
+            background-color: var(--vscode-editor-background);
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        h1 {
+            color: var(--vscode-textLink-foreground);
+            border-bottom: 2px solid var(--vscode-textLink-foreground);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            color: var(--vscode-textLink-activeForeground);
+            margin-top: 30px;
+        }
+
+        .hero {
+            background-color: var(--vscode-editor-inactiveSelectionBackground);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        .config-section {
+            background-color: var(--vscode-editor-inactiveSelectionBackground);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .config-option {
+            margin: 15px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        label {
+            font-weight: 500;
+            min-width: 250px;
+        }
+
+        select,
+        input[type="checkbox"] {
+            padding: 5px;
+            background-color: var(--vscode-input-background);
+            color: var(--vscode-input-foreground);
+            border: 1px solid var(--vscode-input-border);
+            border-radius: 4px;
+        }
+
+        select {
+            min-width: 150px;
+        }
+
+        input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        button {
+            background-color: var(--vscode-button-background);
+            color: var(--vscode-button-foreground);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-right: 10px;
+        }
+
+        button:hover {
+            background-color: var(--vscode-button-hoverBackground);
+        }
+
+        .button-group {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid var(--vscode-panel-border);
+        }
+
+        .feature-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .feature-list li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .feature-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--vscode-textLink-foreground);
+            font-weight: bold;
+        }
+
+        .description {
+            color: var(--vscode-descriptionForeground);
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+
+        .info-box {
+            background-color: var(--vscode-inputValidation-infoBackground);
+            border-left: 4px solid var(--vscode-inputValidation-infoBorder);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        code {
+            background-color: var(--vscode-textCodeBlock-background);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: var(--vscode-editor-font-family);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="hero">
+        <h1>🎉 Welcome to Folder Alias Enhanced!</h1>
+        <p>Add custom labels to folders and files in your VS Code Explorer. Make your workspace more organized and
+            easier to navigate.</p>
+    </div>
+
+    <h2>✨ Features</h2>
+    <ul class="feature-list">
+        <li>Add custom alias labels to any folder or file</li>
+        <li>Public aliases (shared with team via Git)</li>
+        <li>Private aliases (local only, gitignored)</li>
+        <li>Realtime updates when config files change</li>
+        <li>Configurable priority between public and private aliases</li>
+        <li>Multi-root workspace support</li>
+    </ul>
+
+    <h2>⚙️ Initial Configuration</h2>
+    <p>Configure the extension to match your workflow:</p>
+
+    <div class="config-section">
+        <h3>General Settings</h3>
+
+        <div class="config-option">
+            <label for="enable">Enable Extension:</label>
+            <input type="checkbox" id="enable" checked>
+        </div>
+
+        <div class="config-option">
+            <label for="defaultAliasType">Default Alias Type:</label>
+            <select id="defaultAliasType">
+                <option value="public">Public (shared via Git)</option>
+                <option value="private">Private (local only)</option>
+            </select>
+            <div class="description">Choose whether new aliases are public or private by default</div>
+        </div>
+
+        <div class="config-option">
+            <label for="aliasPriority">Alias Priority:</label>
+            <select id="aliasPriority">
+                <option value="private-first" selected>Private First (private overrides public)</option>
+                <option value="public-first">Public First (public overrides private)</option>
+            </select>
+            <div class="description">When same folder has both public and private aliases, which takes precedence</div>
+        </div>
+    </div>
+
+    <div class="config-section">
+        <h3>Auto-Create Config Files</h3>
+
+        <div class="config-option">
+            <label for="autoCreatePublicConfig">Auto-create public-folder-alias.json:</label>
+            <input type="checkbox" id="autoCreatePublicConfig">
+            <div class="description">Automatically create the public config file when opening a workspace</div>
+        </div>
+
+        <div class="config-option">
+            <label for="autoCreatePrivateConfig">Auto-create private-folder-alias.json:</label>
+            <input type="checkbox" id="autoCreatePrivateConfig">
+            <div class="description">Automatically create the private config file when opening a workspace</div>
+        </div>
+
+        <div class="config-option">
+            <label for="autoAddPrivateToGitignore">Auto-add to .gitignore:</label>
+            <input type="checkbox" id="autoAddPrivateToGitignore" checked>
+            <div class="description">Automatically add private-folder-alias.json to .gitignore</div>
+        </div>
+    </div>
+
+    <div class="info-box">
+        <strong>💡 Quick Start:</strong> Right-click any folder in the Explorer and select <code>Add/Edit Alias</code>
+        to get started!
+    </div>
+
+    <div class="button-group">
+        <button id="saveBtn">Save Configuration</button>
+        <button id="skipBtn"
+            style="background-color: var(--vscode-button-secondaryBackground); color: var(--vscode-button-secondaryForeground);">Skip
+            for Now</button>
+    </div>
+
+    <script>
+        const vscode = acquireVsCodeApi();
+
+        // Load current settings on startup
+        window.addEventListener('message', event => {
+            const message = event.data;
+            if (message.type === 'loadSettings') {
+                const settings = message.settings;
+                document.getElementById('enable').checked = settings.enable !== false;
+                document.getElementById('defaultAliasType').value = settings.defaultAliasType || 'public';
+                document.getElementById('aliasPriority').value = settings.aliasPriority || 'private-first';
+                document.getElementById('autoCreatePublicConfig').checked = settings.autoCreatePublicConfig || false;
+                document.getElementById('autoCreatePrivateConfig').checked = settings.autoCreatePrivateConfig || false;
+                document.getElementById('autoAddPrivateToGitignore').checked = settings.autoAddPrivateToGitignore !== false;
+            }
+        });
+
+        // Request current settings
+        vscode.postMessage({ type: 'ready' });
+
+        // Save button
+        document.getElementById('saveBtn').addEventListener('click', () => {
+            const settings = {
+                enable: document.getElementById('enable').checked,
+                defaultAliasType: document.getElementById('defaultAliasType').value,
+                aliasPriority: document.getElementById('aliasPriority').value,
+                autoCreatePublicConfig: document.getElementById('autoCreatePublicConfig').checked,
+                autoCreatePrivateConfig: document.getElementById('autoCreatePrivateConfig').checked,
+                autoAddPrivateToGitignore: document.getElementById('autoAddPrivateToGitignore').checked
+            };
+            vscode.postMessage({ type: 'saveSettings', settings });
+        });
+
+        // Skip button
+        document.getElementById('skipBtn').addEventListener('click', () => {
+            vscode.postMessage({ type: 'close' });
+        });
+    </script>
+</body>
+
+</html>

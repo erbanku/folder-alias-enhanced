@@ -47,6 +47,11 @@
           "light": "media/light/edit.svg",
           "dark": "media/dark/edit.svg"
         }
+      },
+      {
+        "command": "folder-alias.showWelcome",
+        "title": "Show Welcome Page",
+        "category": "Folder Alias"
       }
     ],
     "menus": {
@@ -91,6 +96,12 @@
           "type": "boolean",
           "default": true,
           "description": "Automatically add private-folder-alias.json to .gitignore."
+        },
+        "folder-alias-enhanced.aliasPriority": {
+          "type": "string",
+          "enum": [ "private-first", "public-first" ],
+          "default": "private-first",
+          "description": "Priority when merging aliases - 'private-first' (private overrides public) or 'public-first' (public overrides private)."
         }
       }
     }

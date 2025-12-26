@@ -1,6 +1,10 @@
 # Folder Alias Enhanced
 
-Easily add custom alias labels to folders and files in VS Code for better project organization. Now with enhanced features and active maintenance.
+> [!NOTE]
+>
+> This continues work includes huge additional features and active maintenance compared to the original work.
+
+> Easily add custom alias labels to folders and files in VS Code for better project organization. Now with enhanced features and active maintenance.
 
 ![Demo](./docs/images/image.png)
 
@@ -9,13 +13,15 @@ Easily add custom alias labels to folders and files in VS Code for better projec
 -   **Custom Alias Labels** - Add descriptive labels to any folder/file in the Explorer tree
 -   **Context Menu Integration** - Right-click any folder to add, edit, or remove aliases
 -   **Public & Private Configs** - Share aliases with your team (public) or keep them local (private)
--   **Visual Type Indicator** - Toggle between public (👁️ eye icon) and private (🔒 lock icon) when adding aliases
+-   **Visual Type Indicator** - Toggle between public (eye icon) and private (lock icon) when adding aliases
 -   **Multi-Root Workspace Support** - Each workspace folder maintains its own independent alias configuration
 -   **Auto-Truncation** - Long aliases are automatically truncated to 15 characters with full text shown in tooltip
 -   **Smart Auto-Detection** - Automatically detects if you're editing an existing alias or adding a new one
 -   **Configurable Defaults** - Set default alias type (public/private) and auto-create config files on startup
 -   **GitIgnore Integration** - Automatically adds private config to `.gitignore` to keep personal aliases local
--   **Live Updates** - Alias changes are reflected immediately without restarting VS Code
+-   **Realtime Updates** - Config file changes are applied instantly without reloading the extension
+-   **Priority Control** - Configure whether private or public aliases take precedence when both exist
+-   **Welcome Page** - Interactive setup wizard on first install to configure all settings
 
 ## What's Different?
 
@@ -24,11 +30,16 @@ Easily add custom alias labels to folders and files in VS Code for better projec
 -   Enhanced UI with public/private toggle button
 -   Better multi-root workspace handling
 -   Reactive state management for instant updates
+-   Realtime config file watching
+-   Configurable alias priority system
+-   First-run welcome page for easy setup
 
 ## Install
 
 -   Search "Folder Alias Enhanced" in VS Code Extensions and install
 -   Or: Download `.vsix` and install via Command Palette > Extensions: Install from VSIX
+
+On first install, a welcome page will open automatically to help you configure the extension.
 
 ## Usage
 
@@ -38,8 +49,8 @@ Easily add custom alias labels to folders and files in VS Code for better projec
 2. Select **Add/Edit Alias** from the context menu
 3. Enter your desired alias name
 4. Click the icon button to toggle between:
-    - 👁️ **Public** (shared with team, version controlled)
-    - 🔒 **Private** (local only, gitignored)
+    - **Public** (shared with team, version controlled)
+    - **Private** (local only, gitignored)
 5. Press Enter to save
 
 ### Editing an Alias
@@ -58,6 +69,7 @@ Access these settings in VS Code Settings (search for "Folder Alias"):
 
 -   `folder-alias-enhanced.enable` - Enable/disable the extension (default: `true`)
 -   `folder-alias-enhanced.defaultAliasType` - Default type for new aliases: `"public"` or `"private"` (default: `"public"`)
+-   `folder-alias-enhanced.aliasPriority` - Alias priority when both exist: `"private-first"` or `"public-first"` (default: `"private-first"`)
 -   `folder-alias-enhanced.autoCreatePublicConfig` - Auto-create public config file on startup (default: `false`)
 -   `folder-alias-enhanced.autoCreatePrivateConfig` - Auto-create private config file on startup (default: `false`)
 -   `folder-alias-enhanced.autoAddPrivateToGitignore` - Auto-add private config to `.gitignore` (default: `true`)
@@ -83,7 +95,13 @@ Example configuration:
 }
 ```
 
-**Note:** Private aliases take precedence over public aliases for the same path.
+**Note:** By default, private aliases take precedence over public aliases for the same path. This can be configured via the `aliasPriority` setting.
+
+Config file changes are detected automatically and applied in realtime without reloading.
+
+## Commands
+
+-   `Folder Alias: Show Welcome Page` - Open the welcome/configuration page at any time
 
 ## License
 

@@ -1,13 +1,20 @@
 import * as fs from "node:fs";
+import type { UseFileAliasReturn } from "./file-alias";
 import { defineExtension } from "reactive-vscode";
 import { joinURL } from "ufo";
 import { workspace } from "vscode";
 import { registerCommands } from "./command";
 import { config } from "./config";
-import { useFileAlias, type UseFileAliasReturn } from "./file-alias";
+import { useFileAlias } from "./file-alias";
 import { addToGitignore, writeConfig } from "./utils/file.util";
+import { shouldShowWelcomePage, showWelcomePage } from "./views/welcome";
 
-const { activate, deactivate } = defineExtension(async () => {
+const { activate, deactivate } = defineExtension(async (context) => {
+  // Show welcome page on first install
+  if (shouldShowWelcomePage(context)) {
+    showWelcomePage(context);
+  }
+
   if (!workspace.workspaceFolders) {
     return;
   }
@@ -18,7 +25,8 @@ const { activate, deactivate } = defineExtension(async () => {
     const ws = workspace.workspaceFolders[index];
     const workspaceDir: string = ws.uri.fsPath;
     const vscodeDir = joinURL(workspaceDir, ".vscode");
-    if (!fs.existsSync(vscodeDir)) fs.mkdirSync(vscodeDir);
+    if (!fs.existsSync(vscodeDir))
+      fs.mkdirSync(vscodeDir);
     const configPath = joinURL(vscodeDir, "public-folder-alias.json");
     const privateConfigPath = joinURL(vscodeDir, "private-folder-alias.json");
 
@@ -39,8 +47,7 @@ const { activate, deactivate } = defineExtension(async () => {
     fileAliasMap.set(ws.uri.toString(), fileAlias);
   }
 
-  console.log("[folder-alias] Registering commands with", fileAliasMap.size, "workspace(s)");
-  registerCommands(fileAliasMap);
+  registerCommands(fileAliasMap, context);
 });
 
 export { activate, deactivate };

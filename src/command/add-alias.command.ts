@@ -1,12 +1,15 @@
+import type { ExtensionContext } from "vscode";
 import type { UseFileAliasReturn } from "../file-alias";
 import { useCommand } from "reactive-vscode";
 import * as vscode from "vscode";
 import { config } from "../config";
+import { showWelcomePage } from "../views/welcome";
 
-function registerCommands(contextMap: Map<string, UseFileAliasReturn>) {
+function registerCommands(contextMap: Map<string, UseFileAliasReturn>, extensionContext: ExtensionContext) {
   function getContext(uri: vscode.Uri) {
     const ws = vscode.workspace.getWorkspaceFolder(uri);
-    if (!ws) return undefined;
+    if (!ws)
+      return undefined;
     const fileAlias = contextMap.get(ws.uri.toString());
     return { ws, fileAlias };
   }
@@ -69,10 +72,8 @@ function registerCommands(contextMap: Map<string, UseFileAliasReturn>) {
 
   // Helper function to save alias
   function saveAlias(uri: vscode.Uri, alias: string, type: string, workspace: vscode.WorkspaceFolder, fileAlias: UseFileAliasReturn) {
-    console.log('[folder-alias] saveAlias called:', { uri: uri.toString(), alias, type });
     const { publicConfig, privateConfig, resetConfig, savePrivate, savePublic, changeEmitter } = fileAlias;
     const relativelyPath = uri.path.substring(workspace.uri.path.length + 1);
-    console.log('[folder-alias] Relative path:', relativelyPath);
 
     if (type === "private") {
       // Remove from public if exists
@@ -124,15 +125,12 @@ function registerCommands(contextMap: Map<string, UseFileAliasReturn>) {
 
   // Add/Edit Alias command - automatically handles both scenarios
   useCommand("folder-alias.addAlias", async (uri?: vscode.Uri) => {
-    console.log("[folder-alias] addAlias command triggered", uri?.toString());
-
     if (!uri) {
       vscode.window.showErrorMessage("Please right-click on a folder to add an alias.");
       return;
     }
 
     const ctx = getContext(uri);
-    console.log("[folder-alias] context:", ctx);
 
     if (!ctx || !ctx.fileAlias) {
       vscode.window.showErrorMessage("Could not resolve workspace context for this folder.");
@@ -167,15 +165,12 @@ function registerCommands(contextMap: Map<string, UseFileAliasReturn>) {
 
   // Remove Alias command - only works when alias exists
   useCommand("folder-alias.removeAlias", (uri?: vscode.Uri) => {
-    console.log("[folder-alias] removeAlias command triggered", uri?.toString());
-
     if (!uri) {
       vscode.window.showErrorMessage("Please right-click on a folder to remove an alias.");
       return;
     }
 
     const ctx = getContext(uri);
-    console.log("[folder-alias] context:", ctx);
 
     if (!ctx || !ctx.fileAlias) {
       vscode.window.showErrorMessage("Could not resolve workspace context for this folder.");
@@ -190,6 +185,11 @@ function registerCommands(contextMap: Map<string, UseFileAliasReturn>) {
 
     removeAlias(uri, ws, fileAlias);
     vscode.window.showInformationMessage("Alias removed successfully.");
+  });
+
+  // Show Welcome Page command
+  useCommand("folder-alias.showWelcome", () => {
+    showWelcomePage(extensionContext);
   });
 }
 

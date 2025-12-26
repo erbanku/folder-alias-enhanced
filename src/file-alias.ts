@@ -19,10 +19,16 @@ export interface UseFileAliasReturn extends UseConfigReturn {
 }
 export function useFileAlias(uri: Uri): UseFileAliasReturn {
   const { publicConfig, privateConfig, configFile, resetConfig, savePublic, savePrivate } = useConfig(uri.fsPath);
+
+  // Create event emitter first so it can be used in watcher
+  const changeEmitter = useEventEmitter<undefined | Uri | Uri[]>([]);
+
   const watcher = useFsWatcher(new RelativePattern(uri, "**/*"));
   watcher.onDidChange((uri) => {
-    if (uri.fsPath.endsWith("public-folder-alias.json")) {
+    if (uri.fsPath.endsWith("public-folder-alias.json") || uri.fsPath.endsWith("private-folder-alias.json")) {
       resetConfig();
+      // Trigger decoration refresh for all files
+      changeEmitter.fire(undefined);
     }
   });
   function getFileDecoration(_uri: Uri) {
@@ -41,7 +47,7 @@ export function useFileAlias(uri: Uri): UseFileAliasReturn {
       return new FileDecoration(truncatedDescription, tooltip);
     }
   }
-  const changeEmitter = useEventEmitter<undefined | Uri | Uri[]>([]);
+
   window.registerFileDecorationProvider({
     onDidChangeFileDecorations: changeEmitter.event,
     provideFileDecoration: uri => getFileDecoration(uri),
