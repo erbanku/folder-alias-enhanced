@@ -35,7 +35,7 @@ export function useFileAlias(uri: Uri): UseFileAliasReturn {
     const file = _uri.toString().replace(`${uri.toString()}/`, "");
     if (configFile.value[file]) {
       const description = configFile.value[file].description || "";
-      const MAX_BADGE_LENGTH = 15; // Reasonable length for display
+      const MAX_BADGE_LENGTH = 30; // Reasonable length for display
       const isTruncated = description.length > MAX_BADGE_LENGTH;
       const truncatedDescription = isTruncated
         ? `${description.substring(0, MAX_BADGE_LENGTH)}...`

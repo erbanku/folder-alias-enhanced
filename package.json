@@ -2,7 +2,7 @@
   "publisher": "erbanku",
   "name": "folder-alias-enhanced",
   "displayName": "Folder Alias Enhanced",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "An extension to add folder alias labels to the VSCode file tree",
   "author": "erbanku",
   "license": "GPLV3",
